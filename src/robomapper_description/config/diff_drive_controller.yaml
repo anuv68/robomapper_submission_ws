@@ -1,0 +1,41 @@
+# ~/robomapper_submission_ws/src/robomapper_description/config/diff_drive_controller.yaml
+
+joint_state_broadcaster:
+  ros__parameters:
+    type: joint_state_broadcaster/JointStateBroadcaster
+    joints:
+      - front_left_wheel_joint
+      - front_right_wheel_joint
+      - rear_left_wheel_joint
+      - rear_right_wheel_joint
+
+diff_drive_controller:
+  ros__parameters:
+    type: diff_drive_controller/DiffDriveController
+    publish_rate: 50.0
+    odom_frame_id: "odom"
+    base_frame_id: "base_link"
+    enable_odom_tf: true
+    use_stamped_vel: false
+    cmd_vel: "cmd_vel" # <-- CRITICAL: Ensure this line is present
+    cmd_vel_timeout: 0.5 # Add a timeout for safety
+    left_wheel_names: ["front_left_wheel_joint", "rear_left_wheel_joint"]
+    right_wheel_names: ["front_right_wheel_joint", "rear_right_wheel_joint"]
+    wheel_separation: 0.32 # Based on your origin x and y for wheels (0.16 * 2)
+    wheel_radius: 0.05
+    linear:
+      x:
+        has_velocity_limits: true
+        max_velocity: 0.5
+        min_velocity: -0.5
+        has_acceleration_limits: true
+        max_acceleration: 1.0
+        min_acceleration: -1.0
+    angular:
+      z:
+        has_velocity_limits: true
+        max_velocity: 1.0
+        min_velocity: -1.0
+        has_acceleration_limits: true
+        max_acceleration: 2.0
+        min_acceleration: -2.0
